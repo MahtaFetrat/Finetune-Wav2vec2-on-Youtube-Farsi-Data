@@ -1,28 +1,20 @@
-
-
 from datasets import load_from_disk
 train = load_from_disk('/media/external_16TB_1/m_fetrat/speech-project/youtube_data/train')
 test = load_from_disk('/media/external_16TB_1/m_fetrat/speech-project/youtube_data/test')
 
 
-
 train = train.remove_columns(["youtube_url", "title", "segment_id", "video_id"])
 test = test.remove_columns(["youtube_url", "title", "segment_id", "video_id"])
 
-
-from datasets import ClassLabel
-import random
-import pandas as pd
 import re
 
 # Define the regex to match any character not in the allowed set
-chars_to_keep = "حابخدذرزسشصضطظعغفقلئآمتثجنهوپچژکی‌"
+chars_to_keep = "حابخدذرزسشصضطظعغفقلئآمتثجنهوپچژکگی‌"
 chars_to_ignore_regex = f'[^{chars_to_keep}\s]'
 
 def remove_special_characters(batch):
     batch["transcription"] = re.sub(chars_to_ignore_regex, '', batch["transcription"]).lower() + " "
     return batch
-
 
 
 train = train.map(remove_special_characters)
@@ -44,7 +36,6 @@ vocab_list = list(set(vocab_train["vocab"][0]) | set(vocab_test["vocab"][0]))
 
 vocab_dict = {v: k for k, v in enumerate(vocab_list)}
 vocab_dict
-
 
 
 vocab_dict["|"] = vocab_dict[" "]
@@ -146,9 +137,6 @@ class DataCollatorCTCWithPadding:
 
 data_collator = DataCollatorCTCWithPadding(processor=processor, padding=True)
 
-
-# from datasets import load_metric
-# wer_metric = load_metric("wer")
 import evaluate
 wer_metric = evaluate.load("wer")
 
@@ -188,7 +176,7 @@ checkpoint_dir = "/media/external_16TB_1/m_fetrat/speech-project/finetuned/check
 
 # Determine the starting epoch
 if os.path.exists(checkpoint_dir):
-    # Extract the epoch and step from the checkpoint name (e.g., checkpoint-4-1000)
+    # Extract the epoch and step from the checkpoint
     match = re.search(r"checkpoint-(\d+)-\d+", os.path.basename(checkpoint_dir))
     if match:
         start_epoch = int(match.group(1))  # Extract the epoch number
