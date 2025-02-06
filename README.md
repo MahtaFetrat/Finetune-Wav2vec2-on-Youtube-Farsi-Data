@@ -5,7 +5,7 @@ This repository contains the code and resources for fine-tuning the `wav2vec2` m
 ## Model Details
 
 - **Base Model**: [masoudmzb/wav2vec2-xlsr-multilingual-53-fa](https://huggingface.co/masoudmzb/wav2vec2-xlsr-multilingual-53-fa)
-- **Fine-Tuned Model**: [Fine-tuned model weights]([INSERT_YOUR_MODEL_LINK_HERE](https://huggingface.co/MahtaFetrat/wav2vec2_finetuned_on_youtube_farsi_30))
+- **Fine-Tuned Model**: [Fine-tuned model weights](https://huggingface.co/MahtaFetrat/wav2vec2_finetuned_on_youtube_farsi_30)
 - **Dataset**: [pourmand1376/asr-farsi-youtube-chunked-30-seconds](https://huggingface.co/datasets/pourmand1376/asr-farsi-youtube-chunked-30-seconds)
 - **WER**: 26% (on the test split)
 
